@@ -1,0 +1,119 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{natbib}
+\usepackage{url}
+
+% Header configuration
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Chavez Lopez \thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+\noindent
+Edgar Chavez Lopez \\
+AP BIOLOGY \\
+Mr. Laverdiere \\
+8 December 2025
+
+\vspace{1em}
+\begin{center}
+    \textbf{Redox Signaling: How Mitochondria Regulate Cell Fate Through Reactive Oxygen Species}
+\end{center}
+\vspace{1em}
+
+Mitochondria are best known as the powerhouse of the cell for their production of ATP through cellular respiration. However, they also serve as critical regulators of cell fate. Depending on their functional state, mitochondria produce reactive oxygen species (ROS)---signaling molecules that determine whether a cell will proliferate, differentiate, or undergo apoptosis \citep{Zhang2016}. The mitochondria do not ``intend'' to regulate the cell like a thinking entity; rather, regulation emerges from biochemical activities governed by thermodynamics and physics.
+
+\section*{The Nature of ROS}
+
+Reactive oxygen species are by-products of mitochondrial metabolism that function as both harmful oxidants and essential signaling molecules. ROS include superoxide anion (O$_2^{\cdot-}$), hydrogen peroxide (H$_2$O$_2$), and hydroxyl radical ($\cdot$OH). These species are highly reactive because many contain unpaired electrons, making them unstable free radicals that seek to oxidize nearby proteins, DNA, and lipids \citep{Thannickal2000}.
+
+ROS originate primarily from the electron transport chain (ETC). When Complex I becomes backed up---due to high NADH levels or sluggish ATP synthase activity---electrons leak and are captured by molecular oxygen, the final electron acceptor, generating superoxide anion. Superoxide dismutase then converts this to H$_2$O$_2$, which can further react with transition metals like Fe$^{2+}$ (via the Fenton reaction) to produce hydroxyl radicals \citep{Rauf2024}. Thus, oxygen serves as the starting point for the entire ROS pathway.
+
+\section*{ROS as Concentration-Dependent Signals}
+
+The cellular response to ROS depends critically on concentration. At low levels (approximately $10^{-11}$ to $10^{-12}$ M H$_2$O$_2$), ROS promote cell growth and proliferation. At moderate levels, they trigger stress responses that slow proliferation and promote differentiation. At high levels, they initiate apoptosis \citep{Burdon2006, Nakamura2021}. This concentration-dependent effect reflects the ``double-edged'' nature of ROS in cellular biology \citep{Liao2021}.
+
+ROS do not directly activate or deactivate kinases. Instead, they modify redox-sensitive regulatory proteins---particularly through oxidation of cysteine residues---which indirectly modulates phosphatase and kinase activity \citep{Zhang2016}. The pathways influenced include PI3K/Akt and ERK1/2 (promoting proliferation), JNK and p38 MAPK (promoting stress response and differentiation), and p53 (regulating the checkpoint between survival and apoptosis) \citep{Rauf2024}.
+
+\section*{The PTEN-Akt Example}
+
+A well-characterized example of redox regulation involves the tumor suppressor PTEN (phosphatase and tensin homolog). PTEN normally dephosphorylates PIP$_3$ to PIP$_2$, thereby antagonizing PI3K signaling and suppressing cell growth. However, H$_2$O$_2$ can oxidize PTEN's catalytic cysteine residue (Cys124), forming a disulfide bond with Cys71 that inactivates the phosphatase \citep{Lee2002, Leslie2003, Kwon2004}. 
+
+When low levels of ROS inactivate PTEN, PIP$_3$ accumulates at the membrane, recruiting Akt. PDK1 and mTORC2 then phosphorylate Akt, activating downstream proliferative signaling. This mechanism explains how tumor cells, which often maintain low-ROS environments through reduced mitochondrial respiration (the Warburg effect), can sustain ERK/Akt activation and uncontrolled proliferation \citep{Papa2019}.
+
+\section*{Concentration-Dependent Pathway Switching}
+
+At low ROS concentrations, activated ERK1/2 and Akt promote expression of Cyclin D1, pushing cells from G1 into S phase. Modest increases in ROS can elevate p53, which acts as a checkpoint regulator---not by activating proliferative kinases, but by inhibiting cyclin-CDK activity and promoting DNA repair. Simultaneously, slightly elevated ROS activate stress-related kinases JNK and p38 MAPK, encouraging cells to slow proliferation and begin differentiation \citep{Zhang2016}.
+
+At high ROS levels with increased ETC activity, Akt and ERK1/2 become suppressed while p53 and proapoptotic kinases (JNK, p38 MAPK) become strongly activated. This tips the balance toward cell cycle arrest and apoptosis \citep{Liao2021}. The differential activation of these pathways demonstrates how mitochondria, through ROS production, influence the balance between cell cycle progression and cell death.
+
+\section*{Beyond Signaling: Other ROS Functions}
+
+ROS serve additional cellular functions beyond signaling. In the rough endoplasmic reticulum, oxidizing conditions facilitate proper protein folding through disulfide bond formation. In immune cells, the phagosomal enzyme NADPH oxidase generates superoxide, which---through superoxide dismutase and myeloperoxidase---produces hypochlorous acid (HOCl), enabling destruction of engulfed bacteria \citep{Zhang2016}.
+
+\section*{Conclusion}
+
+ROS embody a fundamental paradox in biology: molecules born of oxygen's reactive power can both threaten life and sustain it. At low concentrations they promote growth; as levels rise they trigger stress responses that slow proliferation; at high concentrations they initiate apoptosis. This complex system demonstrates that balance is fundamental in biology. Just as a flame can warm or burn, ROS wield both destructive potential and essential signaling capacity.
+
+It is in this delicate equilibrium---the fine tuning between damage and signaling---that life finds resilience and adaptability, continuously negotiating survival through change. This also reflects the complexity of human life and the beauty in complex living systems. Ultimately, like all matter and energy, we too move toward a state of maximum entropy, a final equilibrium reminding us of the gift given to us by Mother Nature: to be and to think.
+
+\bibliographystyle{apalike}
+\begin{thebibliography}{99}
+
+\bibitem[Burdon, 2006]{Burdon2006}
+Burdon, R.H., et al. (2006).
+\newblock Cell proliferation, reactive oxygen and cellular glutathione.
+\newblock {\em Biochemical Society Symposium}, 38:535--542.
+
+\bibitem[Kwon et al., 2004]{Kwon2004}
+Kwon, J., Lee, S.R., Yang, K.S., et al. (2004).
+\newblock Reversible oxidation and inactivation of the tumor suppressor PTEN in cells stimulated with peptide growth factors.
+\newblock {\em Proceedings of the National Academy of Sciences}, 101(47):16419--16424.
+
+\bibitem[Lee et al., 2002]{Lee2002}
+Lee, S.R., Yang, K.S., Kwon, J., et al. (2002).
+\newblock Reversible inactivation of the tumor suppressor PTEN by H$_2$O$_2$.
+\newblock {\em Journal of Biological Chemistry}, 277(23):20336--20342.
+
+\bibitem[Leslie et al., 2003]{Leslie2003}
+Leslie, N.R., Bennett, D., Lindsay, Y.E., et al. (2003).
+\newblock Redox regulation of PI 3-kinase signalling via inactivation of PTEN.
+\newblock {\em The EMBO Journal}, 22(20):5501--5510.
+
+\bibitem[Liao et al., 2021]{Liao2021}
+Liao, Z., Chua, D., and Tan, N.S. (2021).
+\newblock The double-edged roles of ROS in cancer prevention and therapy.
+\newblock {\em Theranostics}, 11(10):4839--4857.
+
+\bibitem[Nakamura and Takada, 2021]{Nakamura2021}
+Nakamura, H., and Takada, K. (2021).
+\newblock Reactive oxygen species in cancer: Current findings and future directions.
+\newblock {\em Cancer Science}, 112(10):3945--3952.
+
+\bibitem[Papa et al., 2019]{Papa2019}
+Papa, S., Choy, P.M., and Bhattacharyya, S. (2019).
+\newblock Phosphoinositide 3-kinase/Akt signaling and redox metabolism in cancer.
+\newblock {\em Frontiers in Oncology}, 8:160.
+
+\bibitem[Rauf et al., 2024]{Rauf2024}
+Rauf, A., Khalil, A.A., Awadallah, S., et al. (2024).
+\newblock Reactive oxygen species in biological systems: Pathways, associated diseases, and potential inhibitors---A review.
+\newblock {\em Food Science \& Nutrition}, 12(2):675--693.
+
+\bibitem[Thannickal and Fanburg, 2000]{Thannickal2000}
+Thannickal, V.J., and Fanburg, B.L. (2000).
+\newblock Reactive oxygen species in cell signaling.
+\newblock {\em American Journal of Physiology-Lung Cellular and Molecular Physiology}, 279(6):L1005--L1028.
+
+\bibitem[Zhang et al., 2016]{Zhang2016}
+Zhang, J., Wang, X., Vikash, V., et al. (2016).
+\newblock ROS and ROS-mediated cellular signaling.
+\newblock {\em Oxidative Medicine and Cellular Longevity}, 2016:4350965.
+
+\end{thebibliography}
+
+\end{document}

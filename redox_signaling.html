@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redox Signaling: How Mitochondria Regulate Cell Fate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e14;
+            --bg-secondary: #111922;
+            --bg-card: #151d28;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --accent-cyan: #00d4aa;
+            --accent-blue: #58a6ff;
+            --accent-purple: #a371f7;
+            --accent-orange: #f0883e;
+            --accent-red: #f85149;
+            --accent-green: #3fb950;
+            --accent-yellow: #d29922;
+            --border: #21262d;
+            --glow-cyan: rgba(0, 212, 170, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 17px;
+        }
+
+        /* Animated background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.4;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(0, 212, 170, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(88, 166, 255, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(163, 113, 247, 0.04) 0%, transparent 60%);
+        }
+
+        /* Header */
+        header {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--glow-cyan) 0%, transparent 70%);
+            opacity: 0.5;
+        }
+
+        .header-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .author-info {
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: var(--bg-card);
+            border-radius: 8px;
+            display: inline-block;
+            border: 1px solid var(--border);
+        }
+
+        .author-info p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+
+        .download-links {
+            margin-top: 1.25rem;
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .download-links a {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 0.5rem 0.9rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: rgba(0, 212, 170, 0.08);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .download-links a:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.12);
+        }
+
+        /* Main content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--accent-cyan);
+        }
+
+        h3 {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            margin: 2rem 0 1rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Chemical formulas */
+        .chem {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            color: var(--accent-orange);
+            background: rgba(240, 136, 62, 0.1);
+            padding: 0.1em 0.4em;
+            border-radius: 4px;
+        }
+
+        /* Pathway diagrams */
+        .diagram-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .diagram-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .diagram-title::before {
+            content: '◆';
+            color: var(--accent-cyan);
+        }
+
+        /* SVG Diagrams */
+        .pathway-svg {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .pathway-svg text {
+            font-family: 'Source Sans 3', sans-serif;
+        }
+
+        /* Concentration gradient diagram */
+        .concentration-bar {
+            display: flex;
+            align-items: stretch;
+            height: 120px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .conc-zone {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .conc-zone:hover {
+            transform: scale(1.02);
+            z-index: 1;
+        }
+
+        .conc-low {
+            background: linear-gradient(135deg, #0d4a3e 0%, #1a6b55 100%);
+            border-right: 2px solid var(--bg-primary);
+        }
+
+        .conc-mid {
+            background: linear-gradient(135deg, #4a3d0d 0%, #6b5a1a 100%);
+            border-right: 2px solid var(--bg-primary);
+        }
+
+        .conc-high {
+            background: linear-gradient(135deg, #4a0d0d 0%, #6b1a1a 100%);
+        }
+
+        .conc-zone .level {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 0.3rem;
+        }
+
+        .conc-zone .effect {
+            font-weight: 600;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .conc-zone .pathways {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.7);
+            margin-top: 0.3rem;
+        }
+
+        /* Video section */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .video-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 212, 170, 0.15);
+        }
+
+        .video-embed {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info {
+            padding: 1rem 1.25rem;
+        }
+
+        .video-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .video-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .video-tag {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent-purple);
+            background: rgba(163, 113, 247, 0.15);
+            padding: 0.2em 0.6em;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+
+        /* Key concept boxes */
+        .concept-box {
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 212, 170, 0.05) 100%);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent-cyan);
+            border-radius: 0 8px 8px 0;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .concept-box.warning {
+            border-left-color: var(--accent-red);
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(248, 81, 73, 0.05) 100%);
+        }
+
+        .concept-box.info {
+            border-left-color: var(--accent-blue);
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.05) 100%);
+        }
+
+        .concept-box h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .concept-box.warning h4 {
+            color: var(--accent-red);
+        }
+
+        .concept-box.info h4 {
+            color: var(--accent-blue);
+        }
+
+        .concept-box p {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        /* Citations */
+        .citation {
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            cursor: help;
+            border-bottom: 1px dotted var(--accent-blue);
+        }
+
+        /* References section */
+        .references {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .references h3 {
+            color: var(--text-primary);
+            margin-top: 0;
+        }
+
+        .references ol {
+            padding-left: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .references li {
+            margin-bottom: 0.75rem;
+        }
+
+        .references a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .references a:hover {
+            text-decoration: underline;
+        }
+
+        /* Conclusion */
+        .conclusion {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .conclusion::before {
+            content: '"';
+            font-family: 'Playfair Display', serif;
+            font-size: 8rem;
+            color: var(--accent-cyan);
+            opacity: 0.1;
+            position: absolute;
+            top: -1rem;
+            left: 2rem;
+        }
+
+        .conclusion p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--text-primary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 2rem 1rem;
+            }
+            
+            main {
+                padding: 2rem 1rem;
+            }
+            
+            .concentration-bar {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .conc-zone {
+                border-right: none !important;
+                border-bottom: 2px solid var(--bg-primary);
+                padding: 1.5rem;
+            }
+            
+            .conc-zone:last-child {
+                border-bottom: none;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        section:nth-child(2) { animation-delay: 0.1s; }
+        section:nth-child(3) { animation-delay: 0.2s; }
+        section:nth-child(4) { animation-delay: 0.3s; }
+        section:nth-child(5) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    
+    <header>
+        <div class="header-meta">AP Biology Research Paper</div>
+        <h1>Redox Signaling</h1>
+        <p class="subtitle">How Mitochondria Regulate Cell Fate Through Reactive Oxygen Species</p>
+        <div class="author-info">
+            <p><strong>Edgar Chavez Lopez</strong> · AP Biology · Mr. Laverdiere · December 8, 2025</p>
+        </div>
+
+        <div class="download-links">
+            <a href="redox_signaling_revised.pdf">Revised PDF</a>
+            <a href="redox_signaling_revised.tex" download>LaTeX source (.tex)</a>
+            <a href="edgar_bio_apper.pdf">Edgar's original PDF</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Introduction -->
+        <section>
+            <h2>Introduction</h2>
+            <p>Mitochondria are best known as the powerhouse of the cell for their production of ATP through cellular respiration. However, they also serve as <strong>critical regulators of cell fate</strong>. Depending on their functional state, mitochondria produce reactive oxygen species (ROS)—signaling molecules that determine whether a cell will proliferate, differentiate, or undergo apoptosis.</p>
+            
+            <p>The mitochondria do not "intend" to regulate the cell like a thinking entity; rather, regulation emerges from biochemical activities governed by thermodynamics and physics.</p>
+
+            <div class="concept-box info">
+                <h4>Key Insight</h4>
+                <p>ROS are not merely toxic byproducts—they are sophisticated signaling molecules whose concentration determines cell fate decisions.</p>
+            </div>
+        </section>
+
+        <!-- Nature of ROS -->
+        <section>
+            <h2>The Nature of ROS</h2>
+            <p>Reactive oxygen species are by-products of mitochondrial metabolism that function as both harmful oxidants and essential signaling molecules. ROS include <span class="chem">O₂•⁻</span> (superoxide anion), <span class="chem">H₂O₂</span> (hydrogen peroxide), and <span class="chem">•OH</span> (hydroxyl radical). These species are highly reactive because many contain unpaired electrons, making them unstable free radicals that seek to oxidize nearby proteins, DNA, and lipids.</p>
+
+            <!-- ETC Diagram -->
+            <div class="diagram-container">
+                <div class="diagram-title">Electron Transport Chain & ROS Production</div>
+                <svg class="pathway-svg" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Background -->
+                    <defs>
+                        <linearGradient id="membrane" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#2a3a4a"/>
+                            <stop offset="50%" style="stop-color:#1a2a3a"/>
+                            <stop offset="100%" style="stop-color:#2a3a4a"/>
+                        </linearGradient>
+                        <linearGradient id="complexGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00d4aa"/>
+                            <stop offset="100%" style="stop-color:#008866"/>
+                        </linearGradient>
+                        <linearGradient id="rosGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#f85149"/>
+                            <stop offset="100%" style="stop-color:#f0883e"/>
+                        </linearGradient>
+
+                        <!-- Arrow markers -->
+                        <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/>
+                        </marker>
+                        <marker id="arrowhead" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/>
+                        </marker>
+                    </defs>
+                    
+                    <!-- Inner membrane -->
+                    <rect x="50" y="120" width="800" height="80" rx="10" fill="url(#membrane)" opacity="0.8"/>
+                    <text x="60" y="165" fill="#6e7681" font-size="11">Inner Mitochondrial Membrane</text>
+                    
+                    <!-- Matrix label -->
+                    <text x="60" y="240" fill="#8b949e" font-size="12">Matrix</text>
+                    
+                    <!-- Intermembrane space label -->
+                    <text x="60" y="100" fill="#8b949e" font-size="12">Intermembrane Space</text>
+                    
+                    <!-- Complex I -->
+                    <rect x="150" y="100" width="80" height="120" rx="8" fill="url(#complexGrad)"/>
+                    <text x="190" y="165" fill="white" font-size="14" font-weight="600" text-anchor="middle">I</text>
+                    <text x="190" y="250" fill="#8b949e" font-size="11" text-anchor="middle">NADH → NAD⁺</text>
+                    
+                    <!-- Electron leak from Complex I -->
+                    <path d="M 230 140 Q 260 100 290 80" stroke="#f85149" stroke-width="2" fill="none" stroke-dasharray="5,5">
+                        <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1s" repeatCount="indefinite"/>
+                    </path>
+                    <circle cx="295" cy="75" r="18" fill="url(#rosGrad)"/>
+                    <text x="295" y="80" fill="white" font-size="10" text-anchor="middle" font-weight="600">O₂•⁻</text>
+                    <text x="295" y="55" fill="#f85149" font-size="9" text-anchor="middle">e⁻ leak!</text>
+                    
+                    <!-- Complex II -->
+                    <rect x="300" y="110" width="60" height="100" rx="8" fill="#3fb950"/>
+                    <text x="330" y="165" fill="white" font-size="14" font-weight="600" text-anchor="middle">II</text>
+                    
+                    <!-- Complex III -->
+                    <rect x="420" y="100" width="80" height="120" rx="8" fill="url(#complexGrad)"/>
+                    <text x="460" y="165" fill="white" font-size="14" font-weight="600" text-anchor="middle">III</text>
+                    
+                    <!-- Electron leak from Complex III -->
+                    <path d="M 500 140 Q 530 100 560 80" stroke="#f85149" stroke-width="2" fill="none" stroke-dasharray="5,5">
+                        <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1s" repeatCount="indefinite"/>
+                    </path>
+                    <circle cx="565" cy="75" r="18" fill="url(#rosGrad)"/>
+                    <text x="565" y="80" fill="white" font-size="10" text-anchor="middle" font-weight="600">O₂•⁻</text>
+                    
+                    <!-- Complex IV -->
+                    <rect x="570" y="100" width="80" height="120" rx="8" fill="#58a6ff"/>
+                    <text x="610" y="165" fill="white" font-size="14" font-weight="600" text-anchor="middle">IV</text>
+                    <text x="610" y="250" fill="#8b949e" font-size="11" text-anchor="middle">O₂ → H₂O</text>
+                    
+                    <!-- ATP Synthase -->
+                    <rect x="720" y="90" width="70" height="140" rx="8" fill="#a371f7"/>
+                    <text x="755" y="165" fill="white" font-size="12" font-weight="600" text-anchor="middle">ATP</text>
+                    <text x="755" y="180" fill="white" font-size="10" text-anchor="middle">Synthase</text>
+                    <text x="755" y="260" fill="#a371f7" font-size="11" text-anchor="middle">ADP + Pᵢ → ATP</text>
+                    
+                    <!-- Electron flow arrows -->
+                    <path d="M 230 160 L 290 160" stroke="#00d4aa" stroke-width="3" marker-end="url(#arrowhead)"/>
+                    <path d="M 360 160 L 410 160" stroke="#00d4aa" stroke-width="3"/>
+                    <path d="M 500 160 L 560 160" stroke="#00d4aa" stroke-width="3"/>
+                    
+                    <!-- Legend -->
+                    <rect x="700" y="10" width="180" height="60" rx="6" fill="#151d28" stroke="#21262d"/>
+                    <circle cx="720" cy="30" r="6" fill="#00d4aa"/>
+                    <text x="735" y="34" fill="#8b949e" font-size="10">Normal e⁻ flow</text>
+                    <circle cx="720" cy="50" r="6" fill="#f85149"/>
+                    <text x="735" y="54" fill="#8b949e" font-size="10">Electron leak → ROS</text>
+                </svg>
+            </div>
+
+            <p>ROS originate primarily from the electron transport chain (ETC), especially at Complex I and Complex III. When the chain becomes highly reduced—such as when NADH is high, ATP synthase is slow, or the proton gradient is very steep—electrons can leak to molecular oxygen (the final electron acceptor), generating superoxide. <strong>Superoxide dismutase (SOD)</strong> then converts this to <span class="chem">H₂O₂</span>, which can further react with transition metals like <span class="chem">Fe²⁺</span> (via the Fenton reaction) to produce hydroxyl radicals.</p>
+
+            <!-- ROS Conversion Diagram -->
+            <div class="diagram-container">
+                <div class="diagram-title">ROS Conversion Pathway</div>
+                <svg class="pathway-svg" viewBox="0 0 800 150" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/>
+                        </marker>
+                    </defs>
+
+                    <!-- O2 -->
+                    <rect x="30" y="50" width="90" height="50" rx="25" fill="#58a6ff"/>
+                    <text x="75" y="82" fill="white" font-size="16" font-weight="600" text-anchor="middle">O₂</text>
+                    <text x="75" y="120" fill="#8b949e" font-size="10" text-anchor="middle">Molecular Oxygen</text>
+                    
+                    <!-- Arrow 1 -->
+                    <path d="M 130 75 L 180 75" stroke="#6e7681" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="155" y="65" fill="#6e7681" font-size="9" text-anchor="middle">+ e⁻</text>
+                    
+                    <!-- Superoxide -->
+                    <rect x="190" y="50" width="100" height="50" rx="25" fill="#f0883e"/>
+                    <text x="240" y="82" fill="white" font-size="16" font-weight="600" text-anchor="middle">O₂•⁻</text>
+                    <text x="240" y="120" fill="#8b949e" font-size="10" text-anchor="middle">Superoxide</text>
+                    
+                    <!-- Arrow 2 -->
+                    <path d="M 300 75 L 350 75" stroke="#6e7681" stroke-width="2"/>
+                    <text x="325" y="65" fill="#3fb950" font-size="9" text-anchor="middle">SOD</text>
+                    
+                    <!-- H2O2 -->
+                    <rect x="360" y="50" width="100" height="50" rx="25" fill="#d29922"/>
+                    <text x="410" y="82" fill="white" font-size="16" font-weight="600" text-anchor="middle">H₂O₂</text>
+                    <text x="410" y="120" fill="#8b949e" font-size="10" text-anchor="middle">Hydrogen Peroxide</text>
+                    
+                    <!-- Arrow 3 -->
+                    <path d="M 470 75 L 520 75" stroke="#6e7681" stroke-width="2"/>
+                    <text x="495" y="65" fill="#f85149" font-size="9" text-anchor="middle">Fe²⁺</text>
+                    
+                    <!-- Hydroxyl -->
+                    <rect x="530" y="50" width="100" height="50" rx="25" fill="#f85149"/>
+                    <text x="580" y="82" fill="white" font-size="16" font-weight="600" text-anchor="middle">•OH</text>
+                    <text x="580" y="120" fill="#8b949e" font-size="10" text-anchor="middle">Hydroxyl Radical</text>
+                    
+                    <!-- Danger indicator -->
+                    <text x="700" y="80" fill="#f85149" font-size="24">⚠</text>
+                    <text x="700" y="100" fill="#f85149" font-size="9" text-anchor="middle">Most</text>
+                    <text x="700" y="112" fill="#f85149" font-size="9" text-anchor="middle">Reactive!</text>
+                </svg>
+            </div>
+
+            <h3>📹 Video: Electron Transport Chain</h3>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-embed">
+                        <iframe src="https://www.youtube.com/embed/UyTto4Aegss" title="Metabolism | Electron Transport Chain: DETAILED | Part 1" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>Metabolism: Electron Transport Chain (Ninja Nerd)</h4>
+                        <p>Detailed walkthrough of oxidative phosphorylation and how complexes I-IV generate the proton gradient.</p>
+                        <span class="video-tag">Advanced</span>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-embed">
+                        <iframe src="https://www.youtube.com/embed/nMiWN7-v2FE" title="Oxidative Stress (Armando Hasudungan)" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>Oxidative Stress (Armando Hasudungan)</h4>
+                        <p>Visual explanation of how ROS form and the body's antioxidant defense systems.</p>
+                        <span class="video-tag">Intermediate</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Concentration-Dependent Signals -->
+        <section>
+            <h2>ROS as Concentration-Dependent Signals</h2>
+            <p>The cellular response to ROS depends critically on concentration. This concentration-dependent effect reflects the "double-edged" nature of ROS in cellular biology.</p>
+
+            <div class="concentration-bar">
+                <div class="conc-zone conc-low">
+                    <span class="level">10⁻¹² – 10⁻¹¹ M H₂O₂</span>
+                    <span class="effect">🌱 Proliferation</span>
+                    <span class="pathways">ERK1/2 ↑ Akt ↑</span>
+                </div>
+                <div class="conc-zone conc-mid">
+                    <span class="level">Moderate</span>
+                    <span class="effect">⚡ Differentiation</span>
+                    <span class="pathways">JNK ↑ p38 MAPK ↑</span>
+                </div>
+                <div class="conc-zone conc-high">
+                    <span class="level">High</span>
+                    <span class="effect">💀 Apoptosis</span>
+                    <span class="pathways">p53 ↑ Caspases ↑</span>
+                </div>
+            </div>
+
+            <p>ROS often signal by oxidizing <strong>redox-sensitive regulatory proteins</strong>—especially cysteine-based phosphatases—thereby shifting phosphorylation balance and indirectly modulating kinase pathways. The pathways influenced include:</p>
+
+            <div class="diagram-container">
+                <div class="diagram-title">Signaling Pathways Affected by ROS</div>
+                <svg class="pathway-svg" viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- ROS Center -->
+                    <circle cx="450" cy="200" r="60" fill="url(#rosGrad)" opacity="0.9"/>
+                    <text x="450" y="195" fill="white" font-size="18" font-weight="700" text-anchor="middle">ROS</text>
+                    <text x="450" y="215" fill="white" font-size="11" text-anchor="middle">H₂O₂</text>
+                    
+                    <!-- Pro-Growth Pathways (Left) -->
+                    <rect x="80" y="80" width="160" height="70" rx="10" fill="#3fb950" opacity="0.9"/>
+                    <text x="160" y="110" fill="white" font-size="14" font-weight="600" text-anchor="middle">PI3K / Akt</text>
+                    <text x="160" y="130" fill="rgba(255,255,255,0.8)" font-size="11" text-anchor="middle">Cell Survival</text>
+                    
+                    <rect x="80" y="170" width="160" height="70" rx="10" fill="#3fb950" opacity="0.9"/>
+                    <text x="160" y="200" fill="white" font-size="14" font-weight="600" text-anchor="middle">ERK1/2</text>
+                    <text x="160" y="220" fill="rgba(255,255,255,0.8)" font-size="11" text-anchor="middle">Proliferation</text>
+                    
+                    <!-- Stress Pathways (Right) -->
+                    <rect x="660" y="80" width="160" height="70" rx="10" fill="#d29922" opacity="0.9"/>
+                    <text x="740" y="110" fill="white" font-size="14" font-weight="600" text-anchor="middle">JNK</text>
+                    <text x="740" y="130" fill="rgba(255,255,255,0.8)" font-size="11" text-anchor="middle">Stress Response</text>
+                    
+                    <rect x="660" y="170" width="160" height="70" rx="10" fill="#d29922" opacity="0.9"/>
+                    <text x="740" y="200" fill="white" font-size="14" font-weight="600" text-anchor="middle">p38 MAPK</text>
+                    <text x="740" y="220" fill="rgba(255,255,255,0.8)" font-size="11" text-anchor="middle">Differentiation</text>
+                    
+                    <!-- Apoptosis (Bottom) -->
+                    <rect x="365" y="320" width="170" height="70" rx="10" fill="#f85149" opacity="0.9"/>
+                    <text x="450" y="350" fill="white" font-size="14" font-weight="600" text-anchor="middle">p53</text>
+                    <text x="450" y="370" fill="rgba(255,255,255,0.8)" font-size="11" text-anchor="middle">Checkpoint / Apoptosis</text>
+                    
+                    <!-- Connection lines -->
+                    <line x1="390" y1="180" x2="250" y2="115" stroke="#3fb950" stroke-width="2" opacity="0.7"/>
+                    <line x1="390" y1="200" x2="250" y2="205" stroke="#3fb950" stroke-width="2" opacity="0.7"/>
+                    <line x1="510" y1="180" x2="650" y2="115" stroke="#d29922" stroke-width="2" opacity="0.7"/>
+                    <line x1="510" y1="200" x2="650" y2="205" stroke="#d29922" stroke-width="2" opacity="0.7"/>
+                    <line x1="450" y1="260" x2="450" y2="310" stroke="#f85149" stroke-width="2" opacity="0.7"/>
+                    
+                    <!-- Labels -->
+                    <text x="100" y="50" fill="#3fb950" font-size="13" font-weight="600">LOW ROS → GROWTH</text>
+                    <text x="660" y="50" fill="#d29922" font-size="13" font-weight="600">MODERATE → STRESS</text>
+                    <text x="380" y="300" fill="#f85149" font-size="13" font-weight="600">HIGH ROS → DEATH</text>
+                </svg>
+            </div>
+
+            <h3>📹 Video: Cell Signaling Pathways</h3>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-embed">
+                        <iframe src="https://www.youtube.com/embed/-LERbAK1mAI" title="PI3K/Akt pathway - part 1: Overview" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>PI3K/Akt pathway – Part 1: Overview (Joe DeMasi)</h4>
+                        <p>Series intro to the PI3K/Akt pathway: how RTKs activate PI3K, generate PIP₃, and recruit Akt.</p>
+                        <span class="video-tag">Advanced</span>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-embed">
+                        <iframe src="https://www.youtube.com/embed/i7z7f-wnews" title="Example of a signal transduction pathway (MAPK)" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>Example of a Signal Transduction Pathway: MAPK (Khan Academy)</h4>
+                        <p>Walkthrough of the Ras→Raf→MEK→ERK (MAPK) cascade and how signaling steps are modeled.</p>
+                        <span class="video-tag">Intermediate</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PTEN-Akt Example -->
+        <section>
+            <h2>The PTEN-Akt Example</h2>
+            <p>A well-characterized example of redox regulation involves the tumor suppressor <strong>PTEN</strong> (phosphatase and tensin homolog). PTEN normally dephosphorylates PIP₃ to PIP₂, thereby antagonizing PI3K signaling and suppressing cell growth.</p>
+
+            <div class="concept-box warning">
+                <h4>Cancer Connection</h4>
+                <p>PTEN is frequently mutated or lost in cancer. Even when PTEN is present, small and localized bursts of <span class="chem">H₂O₂</span> during growth-factor signaling can transiently oxidize and inactivate PTEN, allowing PI3K/Akt signaling to proceed. Many cancers operate with a "just-right" redox balance: ROS high enough to drive signaling, but buffered by antioxidant systems to avoid apoptosis.</p>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram-title">PTEN Oxidation and Akt Activation</div>
+                <svg class="pathway-svg" viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Cell Membrane -->
+                    <rect x="50" y="30" width="800" height="25" rx="5" fill="#21262d"/>
+                    <text x="450" y="48" fill="#6e7681" font-size="11" text-anchor="middle">Cell Membrane</text>
+                    
+                    <!-- PIP2/PIP3 at membrane -->
+                    <circle cx="200" cy="85" r="30" fill="#58a6ff"/>
+                    <text x="200" y="90" fill="white" font-size="12" font-weight="600" text-anchor="middle">PIP₂</text>
+                    
+                    <circle cx="400" cy="85" r="30" fill="#a371f7"/>
+                    <text x="400" y="90" fill="white" font-size="12" font-weight="600" text-anchor="middle">PIP₃</text>
+                    
+                    <!-- PI3K -->
+                    <rect x="260" y="130" width="80" height="50" rx="8" fill="#3fb950"/>
+                    <text x="300" y="160" fill="white" font-size="12" font-weight="600" text-anchor="middle">PI3K</text>
+                    <path d="M 230 85 Q 270 100 270 130" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+                    <path d="M 330 130 Q 380 100 400 115" stroke="#3fb950" stroke-width="2" fill="none"/>
+                    
+                    <!-- PTEN Normal State -->
+                    <g id="pten-normal">
+                        <rect x="100" y="200" width="150" height="80" rx="10" fill="#00d4aa"/>
+                        <text x="175" y="235" fill="white" font-size="14" font-weight="600" text-anchor="middle">PTEN</text>
+                        <text x="175" y="255" fill="rgba(255,255,255,0.8)" font-size="10" text-anchor="middle">Active (Reduced)</text>
+                        <text x="175" y="270" fill="rgba(255,255,255,0.6)" font-size="9" text-anchor="middle">Cys124-SH</text>
+                    </g>
+                    
+                    <!-- Arrow: PTEN dephosphorylates -->
+                    <path d="M 200 200 Q 300 170 370 115" stroke="#00d4aa" stroke-width="2" stroke-dasharray="5,3"/>
+                    <text x="280" y="155" fill="#00d4aa" font-size="10">removes phosphate</text>
+                    
+                    <!-- H2O2 -->
+                    <circle cx="400" cy="260" r="35" fill="url(#rosGrad)"/>
+                    <text x="400" y="255" fill="white" font-size="14" font-weight="600" text-anchor="middle">H₂O₂</text>
+                    <text x="400" y="275" fill="white" font-size="10" text-anchor="middle">(Low)</text>
+                    
+                    <!-- Arrow: H2O2 oxidizes PTEN -->
+                    <path d="M 365 260 L 260 260" stroke="#f85149" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="310" y="250" fill="#f85149" font-size="10">oxidizes</text>
+                    
+                    <!-- PTEN Oxidized State -->
+                    <rect x="100" y="320" width="150" height="80" rx="10" fill="#6e7681"/>
+                    <text x="175" y="355" fill="white" font-size="14" font-weight="600" text-anchor="middle">PTEN</text>
+                    <text x="175" y="375" fill="rgba(255,255,255,0.8)" font-size="10" text-anchor="middle">Inactive (Oxidized)</text>
+                    <text x="175" y="390" fill="rgba(255,255,255,0.6)" font-size="9" text-anchor="middle">Cys124-S-S-Cys71</text>
+                    
+                    <!-- Arrow: PTEN oxidation -->
+                    <path d="M 175 285 L 175 315" stroke="#6e7681" stroke-width="2" marker-end="url(#arrow)"/>
+                    
+                    <!-- Results: PIP3 accumulates -->
+                    <rect x="500" y="120" width="180" height="60" rx="8" fill="#a371f7" opacity="0.3" stroke="#a371f7" stroke-width="2"/>
+                    <text x="590" y="145" fill="#a371f7" font-size="12" font-weight="600" text-anchor="middle">PIP₃ Accumulates</text>
+                    <text x="590" y="165" fill="#a371f7" font-size="10" text-anchor="middle">(not dephosphorylated)</text>
+                    
+                    <!-- Akt -->
+                    <rect x="520" y="220" width="140" height="70" rx="10" fill="#d29922"/>
+                    <text x="590" y="250" fill="white" font-size="14" font-weight="600" text-anchor="middle">Akt</text>
+                    <text x="590" y="270" fill="rgba(255,255,255,0.8)" font-size="10" text-anchor="middle">Recruited to membrane</text>
+                    
+                    <!-- PDK1 + mTORC2 -->
+                    <rect x="700" y="220" width="100" height="70" rx="8" fill="#3fb950"/>
+                    <text x="750" y="250" fill="white" font-size="11" font-weight="600" text-anchor="middle">PDK1</text>
+                    <text x="750" y="268" fill="white" font-size="11" font-weight="600" text-anchor="middle">mTORC2</text>
+                    
+                    <!-- Arrows -->
+                    <path d="M 440 85 L 520 120" stroke="#a371f7" stroke-width="2"/>
+                    <path d="M 590 185 L 590 215" stroke="#d29922" stroke-width="2"/>
+                    <path d="M 665 255 L 695 255" stroke="#3fb950" stroke-width="2" marker-end="url(#arrow)"/>
+                    <text x="680" y="245" fill="#3fb950" font-size="9">phosphorylate</text>
+                    
+                    <!-- Cell Proliferation -->
+                    <rect x="540" y="340" width="180" height="60" rx="10" fill="#3fb950"/>
+                    <text x="630" y="365" fill="white" font-size="14" font-weight="600" text-anchor="middle">CELL SURVIVAL</text>
+                    <text x="630" y="385" fill="rgba(255,255,255,0.8)" font-size="11" text-anchor="middle">& PROLIFERATION</text>
+                    
+                    <path d="M 590 295 L 590 335" stroke="#3fb950" stroke-width="2" marker-end="url(#arrow)"/>
+                </svg>
+            </div>
+
+            <p>When low levels of ROS oxidize PTEN's catalytic cysteine residue (<span class="chem">Cys124</span>), a disulfide bond forms with <span class="chem">Cys71</span> that inactivates the phosphatase. Without PTEN activity, <span class="chem">PIP₃</span> accumulates at the membrane, recruiting Akt. PDK1 and mTORC2 then phosphorylate Akt, activating downstream proliferative signaling.</p>
+
+            <h3>📹 Video: PTEN and Tumor Suppression</h3>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-embed">
+                        <iframe src="https://www.youtube.com/embed/e3TOc_1b3gA" title="PI3K/Akt pathway - part 5: PTEN" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>PI3K/Akt pathway – PTEN (Joe DeMasi)</h4>
+                        <p>PTEN as the key brake on PI3K signaling, and why PTEN loss/oxidation matters in cancer.</p>
+                        <span class="video-tag">Intermediate</span>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-embed">
+                        <iframe src="https://www.youtube.com/embed/Kjx-pXRbnbY" title="The Warburg Effect – Glucose Metabolism in Cancer" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>The Warburg Effect: Glucose Metabolism in Cancer (Dirty Medicine)</h4>
+                        <p>Why cancer cells prefer glycolysis and how this affects ROS levels.</p>
+                        <span class="video-tag">Advanced</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Apoptosis -->
+        <section>
+            <h2>High ROS and Apoptosis</h2>
+            <p>At high ROS levels with increased ETC activity, Akt and ERK1/2 become suppressed while <strong>p53</strong> and proapoptotic kinases (JNK, p38 MAPK) become strongly activated. This tips the balance toward cell cycle arrest and apoptosis.</p>
+
+            <div class="diagram-container">
+                <div class="diagram-title">Apoptosis Pathways Activated by High ROS</div>
+                <svg class="pathway-svg" viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg">
+                    <!-- High ROS -->
+                    <circle cx="400" cy="60" r="50" fill="#f85149"/>
+                    <text x="400" y="55" fill="white" font-size="16" font-weight="700" text-anchor="middle">HIGH</text>
+                    <text x="400" y="75" fill="white" font-size="14" text-anchor="middle">ROS</text>
+                    
+                    <!-- Arrows down -->
+                    <path d="M 330 100 L 200 150" stroke="#f85149" stroke-width="2"/>
+                    <path d="M 400 110 L 400 150" stroke="#f85149" stroke-width="2"/>
+                    <path d="M 470 100 L 600 150" stroke="#f85149" stroke-width="2"/>
+                    
+                    <!-- p53 -->
+                    <rect x="130" y="160" width="140" height="60" rx="8" fill="#d29922"/>
+                    <text x="200" y="195" fill="white" font-size="14" font-weight="600" text-anchor="middle">p53 ↑</text>
+                    
+                    <!-- Mitochondria -->
+                    <ellipse cx="400" cy="190" rx="80" ry="40" fill="#00d4aa" opacity="0.8"/>
+                    <text x="400" y="195" fill="white" font-size="12" font-weight="600" text-anchor="middle">Mitochondria</text>
+                    
+                    <!-- JNK/p38 -->
+                    <rect x="530" y="160" width="140" height="60" rx="8" fill="#d29922"/>
+                    <text x="600" y="185" fill="white" font-size="14" font-weight="600" text-anchor="middle">JNK ↑</text>
+                    <text x="600" y="205" fill="white" font-size="14" font-weight="600" text-anchor="middle">p38 MAPK ↑</text>
+                    
+                    <!-- Cytochrome c release -->
+                    <circle cx="400" cy="270" r="25" fill="#a371f7"/>
+                    <text x="400" y="275" fill="white" font-size="10" font-weight="600" text-anchor="middle">Cyt c</text>
+                    <path d="M 400 230 L 400 240" stroke="#a371f7" stroke-width="2" stroke-dasharray="3,2"/>
+                    
+                    <!-- Caspases -->
+                    <rect x="320" y="310" width="160" height="40" rx="8" fill="#f85149"/>
+                    <text x="400" y="335" fill="white" font-size="13" font-weight="600" text-anchor="middle">CASPASE CASCADE</text>
+                    
+                    <!-- Final: Apoptosis -->
+                    <path d="M 200 225 L 200 280 Q 200 310 280 320" stroke="#d29922" stroke-width="2" stroke-dasharray="4,2"/>
+                    <path d="M 400 295 L 400 305" stroke="#a371f7" stroke-width="2"/>
+                    <path d="M 600 225 L 600 280 Q 600 310 520 320" stroke="#d29922" stroke-width="2" stroke-dasharray="4,2"/>
+                    
+                    <!-- Labels -->
+                    <text x="150" y="255" fill="#d29922" font-size="10">BAX/BAK</text>
+                    <text x="150" y="268" fill="#d29922" font-size="10">activation</text>
+                    <text x="620" y="255" fill="#d29922" font-size="10">Stress</text>
+                    <text x="620" y="268" fill="#d29922" font-size="10">signals</text>
+                </svg>
+            </div>
+
+            <h3>📹 Video: Apoptosis</h3>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-embed">
+                        <iframe src="https://www.youtube.com/embed/jRZHDhHf3tA" title="Apoptosis (Intrinsic/Extrinsic) vs. Necrosis" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>Apoptosis (Intrinsic/Extrinsic) vs. Necrosis (Dirty Medicine)</h4>
+                        <p>High-yield comparison of intrinsic/extrinsic apoptosis pathways versus necrosis.</p>
+                        <span class="video-tag">Advanced</span>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-embed">
+                        <iframe src="https://www.youtube.com/embed/_Isvd01XvSs" title="p53: Guardian of the Genome" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>p53: Guardian of the Genome (Animation)</h4>
+                        <p>Overview of how p53 coordinates DNA repair, cell-cycle arrest, or apoptosis after damage.</p>
+                        <span class="video-tag">Intermediate</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Other Functions -->
+        <section>
+            <h2>Beyond Signaling: Other ROS Functions</h2>
+            <p>ROS serve additional cellular functions beyond signaling:</p>
+            
+            <div class="diagram-container">
+                <div class="diagram-title">Additional Roles of ROS in Cells</div>
+                <svg class="pathway-svg" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/>
+                        </marker>
+                    </defs>
+
+                    <!-- ER -->
+                    <rect x="50" y="30" width="200" height="140" rx="15" fill="#2a3a4a" stroke="#58a6ff" stroke-width="2"/>
+                    <text x="150" y="60" fill="#58a6ff" font-size="13" font-weight="600" text-anchor="middle">Rough ER</text>
+                    <text x="150" y="100" fill="#8b949e" font-size="11" text-anchor="middle">Oxidizing environment</text>
+                    <text x="150" y="120" fill="#8b949e" font-size="11" text-anchor="middle">enables disulfide bonds</text>
+                    <text x="150" y="145" fill="#00d4aa" font-size="11" text-anchor="middle">→ Protein Folding</text>
+                    
+                    <!-- Phagosome -->
+                    <circle cx="450" cy="100" r="70" fill="#2a3a4a" stroke="#f0883e" stroke-width="2"/>
+                    <text x="450" y="70" fill="#f0883e" font-size="13" font-weight="600" text-anchor="middle">Phagosome</text>
+                    <text x="450" y="95" fill="#8b949e" font-size="10" text-anchor="middle">NADPH oxidase</text>
+                    <text x="450" y="110" fill="#8b949e" font-size="10" text-anchor="middle">+ SOD + MPO</text>
+                    <text x="450" y="135" fill="#f85149" font-size="11" text-anchor="middle">→ HOCl (bleach!)</text>
+                    
+                    <!-- Bacteria being killed -->
+                    <ellipse cx="650" cy="100" rx="60" ry="35" fill="#f85149" opacity="0.3" stroke="#f85149" stroke-width="2" stroke-dasharray="5,3"/>
+                    <text x="650" y="95" fill="#f85149" font-size="11" text-anchor="middle">Bacteria</text>
+                    <text x="650" y="115" fill="#f85149" font-size="11" text-anchor="middle">DESTROYED</text>
+                    
+                    <!-- Arrow -->
+                    <path d="M 520 100 L 580 100" stroke="#f85149" stroke-width="2" marker-end="url(#arrow)"/>
+                </svg>
+            </div>
+            
+            <p>In the <strong>rough endoplasmic reticulum</strong>, oxidizing conditions facilitate proper protein folding through disulfide bond formation. In <strong>immune cells</strong>, the phagosomal enzyme NADPH oxidase generates superoxide, which—through superoxide dismutase and myeloperoxidase—produces hypochlorous acid (<span class="chem">HOCl</span>), enabling destruction of engulfed bacteria.</p>
+        </section>
+
+        <!-- Conclusion -->
+        <div class="conclusion">
+            <p>ROS embody a fundamental paradox in biology: molecules born of oxygen's reactive power can both threaten life and sustain it. Just as a flame can warm or burn, ROS wield both destructive potential and essential signaling capacity.</p>
+            <br>
+            <p>It is in this delicate equilibrium—the fine tuning between damage and signaling—that life finds resilience and adaptability, continuously negotiating survival through change. Ultimately, like all matter and energy, we too move toward a state of maximum entropy, a final equilibrium reminding us of the gift given to us by Mother Nature: <strong>to be and to think.</strong></p>
+        </div>
+
+        <!-- References -->
+        <div class="references">
+            <h3>References</h3>
+            <ol>
+                <li>Zhang, J. et al. (2016). ROS and ROS-mediated cellular signaling. <em>Oxidative Medicine and Cellular Longevity</em>. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4779832/" target="_blank">PMC4779832</a></li>
+                <li>Thannickal, V.J. & Fanburg, B.L. (2000). Reactive oxygen species in cell signaling. <em>Am J Physiol Lung Cell Mol Physiol</em>, 279(6):L1005-L1028. <a href="https://journals.physiology.org/doi/full/10.1152/ajplung.2000.279.6.L1005" target="_blank">Link</a></li>
+                <li>Lee, S.R. et al. (2002). Reversible inactivation of the tumor suppressor PTEN by H₂O₂. <em>J Biol Chem</em>, 277(23):20336-20342. <a href="https://www.sciencedirect.com/science/article/pii/S0021925820848741" target="_blank">Link</a></li>
+                <li>Kwon, J. et al. (2004). Reversible oxidation and inactivation of PTEN in cells stimulated with peptide growth factors. <em>PNAS</em>, 101(47):16419-16424. <a href="https://www.pnas.org/doi/10.1073/pnas.0407396101" target="_blank">Link</a></li>
+                <li>Leslie, N.R. et al. (2003). Redox regulation of PI 3-kinase signalling via inactivation of PTEN. <em>EMBO J</em>, 22(20):5501-5510. <a href="https://www.embopress.org/doi/full/10.1093/emboj/cdg513" target="_blank">Link</a></li>
+                <li>Liao, Z. et al. (2021). The double-edged roles of ROS in cancer prevention and therapy. <em>Theranostics</em>, 11(10):4839-4857. <a href="https://www.thno.org/v11p4839.htm" target="_blank">Link</a></li>
+                <li>Rauf, A. et al. (2024). Reactive oxygen species in biological systems: Pathways, associated diseases, and potential inhibitors. <em>Food Sci Nutr</em>, 12(2):675-693. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10867483/" target="_blank">PMC10867483</a></li>
+                <li>Nakamura, H. & Takada, K. (2021). Reactive oxygen species in cancer: Current findings and future directions. <em>Cancer Sci</em>, 112(10):3945-3952. <a href="https://onlinelibrary.wiley.com/doi/10.1111/cas.15068" target="_blank">Link</a></li>
+                <li>Papa, S. et al. (2019). Phosphoinositide 3-kinase/Akt signaling and redox metabolism in cancer. <em>Front Oncol</em>, 8:160. <a href="https://www.frontiersin.org/journals/oncology/articles/10.3389/fonc.2018.00160/full" target="_blank">Link</a></li>
+            </ol>
+        </div>
+    </main>
+
+    <footer>
+        <p>Edgar Chavez Lopez · AP Biology · December 2025</p>
+    </footer>
+</body>
+</html>
