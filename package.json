@@ -1,0 +1,13 @@
+{
+  "name": "edgar-redox-signaling",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static site for the Redox Signaling project with embed regression tests.",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^1.6.0"
+  }
+}
