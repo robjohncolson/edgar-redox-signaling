@@ -8,14 +8,14 @@ This is an AP Biology research paper presentation on **Redox Signaling** by Edga
 
 ## Files
 
-- `redox_signaling.html` - Single-file web app with the complete presentation (HTML, CSS, embedded SVG diagrams)
+- `index.html` - Single-file web app with the complete presentation (HTML, CSS, embedded SVG diagrams)
 - `redox_signaling_revised.pdf` - Revised PDF version of the paper
 - `redox_signaling_revised.tex` - LaTeX source for the revised paper
 - `edgar_bio_apper.pdf` - Original student research paper
 
 ## Development
 
-**No build step required.** Open `redox_signaling.html` directly in a browser.
+**No build step required.** Open `index.html` directly in a browser.
 
 ### Architecture
 
