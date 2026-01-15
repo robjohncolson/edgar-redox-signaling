@@ -1,6 +1,9 @@
-const fs = require("fs");
-const path = require("path");
-const { describe, it, expect } = require("vitest");
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { describe, it, expect } from "vitest";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const htmlPath = path.join(__dirname, "..", "index.html");
 
