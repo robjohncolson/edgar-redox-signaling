@@ -99,7 +99,9 @@ Sections follow the paper's structure: Introduction → Nature of ROS → Concen
 
 **Frontend:** Deploy to GitHub Pages, Netlify, or any static host.
 
-**Railway Server:**
+**AI Chat Backend:** Uses shared `curriculum_render` Railway server at `curriculumrender-production.up.railway.app`. The `/api/ai/chat` endpoint is defined in `curriculum_render/railway-server/server.js`.
+
+**Standalone Server (optional):** The `railway-server/` folder contains a standalone Express server if you want to deploy separately:
 1. Push `railway-server/` to Railway.app
 2. Set `GROQ_API_KEY` environment variable
 3. Update `CHAT_CONFIG.serverUrl` in `index.html` with deployed URL
