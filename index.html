@@ -1649,6 +1649,24 @@
             this.style.height = 'auto';
             this.style.height = Math.min(this.scrollHeight, 120) + 'px';
         });
+
+        // Global escape key handler to close any open modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Close chat modal if open
+                const chatModal = document.getElementById('chatModal');
+                if (chatModal?.classList.contains('active')) {
+                    closeChat();
+                    return;
+                }
+                // Close QR modal if open
+                const qrModal = document.getElementById('qrModal');
+                if (qrModal?.classList.contains('active')) {
+                    qrModal.classList.remove('active');
+                    return;
+                }
+            }
+        });
     </script>
 </body>
 </html>

@@ -35,6 +35,7 @@ The QR code modal is the primary interactive component. It follows a simple two-
 | CLOSED | OPEN   | Click "QR Codes" button              | Add `.active` class to `#qrModal`|
 | OPEN   | CLOSED | Click close button (×)               | Remove `.active` class           |
 | OPEN   | CLOSED | Click overlay (outside modal)        | Remove `.active` class           |
+| OPEN   | CLOSED | Press Escape key                     | Remove `.active` class           |
 
 ### Implementation
 
@@ -155,6 +156,7 @@ The AI chat panel allows students to ask questions about redox signaling.
 |---------|---------|---------------------------|-------------------------------------------|
 | CLOSED  | OPEN    | Click "Ask AI Tutor"      | `openChat()` - add `.active` class        |
 | OPEN    | CLOSED  | Click X / overlay         | `closeChat()` - remove `.active` class    |
+| OPEN    | CLOSED  | Press Escape key          | `closeChat()` - remove `.active` class    |
 | IDLE    | LOADING | User sends message        | `sendMessage()` - show typing indicator   |
 | LOADING | IDLE    | AI responds               | Display response, hide typing indicator   |
 | LOADING | IDLE    | Error occurs              | Display error message, hide indicator     |
@@ -213,6 +215,57 @@ Client                          Server
 | Network failure      | Error message in chat                | User can retry     |
 | Server unavailable   | "Couldn't connect to AI tutor"       | User can retry     |
 | Rate limited (429)   | "Too many requests, please wait"     | Auto-recovers      |
+
+## Global Keyboard Navigation
+
+A global `keydown` event listener handles keyboard shortcuts across all modals.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│  On Escape Key Press:                                       │
+│                                                             │
+│    ┌──────────────────┐                                    │
+│    │ Chat Modal Open? │──yes──▶ closeChat() ──▶ DONE       │
+│    └────────┬─────────┘                                    │
+│             no                                              │
+│             ▼                                               │
+│    ┌──────────────────┐                                    │
+│    │ QR Modal Open?   │──yes──▶ remove .active ──▶ DONE    │
+│    └────────┬─────────┘                                    │
+│             no                                              │
+│             ▼                                               │
+│          (no-op)                                            │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Priority Order
+
+When multiple modals are open, Escape closes them in this order:
+1. Chat modal (highest priority - closes first)
+2. QR modal (closes after chat is closed)
+
+### Implementation
+
+```javascript
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        // Close chat modal if open (priority 1)
+        const chatModal = document.getElementById('chatModal');
+        if (chatModal?.classList.contains('active')) {
+            closeChat();
+            return;
+        }
+        // Close QR modal if open (priority 2)
+        const qrModal = document.getElementById('qrModal');
+        if (qrModal?.classList.contains('active')) {
+            qrModal.classList.remove('active');
+            return;
+        }
+    }
+});
+```
 
 ## External Links
 

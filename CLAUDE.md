@@ -31,7 +31,7 @@ npm start             # Runs on http://localhost:3000
 
 ```bash
 npm install       # Install dependencies (first time only)
-npm test          # Run all tests (73 tests)
+npm test          # Run all tests (83 tests)
 npm run test:watch # Run tests in watch mode
 ```
 
@@ -47,6 +47,7 @@ Tests are in `tests/` directory using Vitest + jsdom:
 | `svg-diagrams.test.js` | All 6 SVG diagrams present with correct labels |
 | `css-accessibility.test.js` | Color contrast, pointer-events fix, responsive design |
 | `chat-panel.test.js` | AI chat UI, suggestions, functions, interactivity |
+| `keyboard-navigation.test.js` | Escape key closes modals, priority order |
 
 ## Architecture
 
