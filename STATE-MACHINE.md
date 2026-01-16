@@ -106,6 +106,114 @@ section {
 }
 ```
 
+## AI Chat Panel State Machine
+
+The AI chat panel allows students to ask questions about redox signaling.
+
+```
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  MODAL STATE (outer)                                                         │
+│                                                                              │
+│    ┌──────────┐  click "Ask AI"    ┌──────────┐                             │
+│    │  CLOSED  │───────────────────▶│   OPEN   │                             │
+│    └──────────┘◀───────────────────└──────────┘                             │
+│                  click X / overlay                                           │
+│                                                                              │
+│  CHAT STATE (inner, when OPEN)                                              │
+│                                                                              │
+│    ┌──────────┐  user sends msg    ┌──────────┐  response     ┌──────────┐ │
+│    │   IDLE   │───────────────────▶│ LOADING  │──────────────▶│   IDLE   │ │
+│    └──────────┘                    └──────────┘               └──────────┘ │
+│         │                               │                                    │
+│         │  click suggestion             │  error                            │
+│         └───────────────────────────────┼──────────────────────────────────▶│
+│                                         │               (show error message) │
+│                                         └──────────────────────────────────▶│
+│                                                           (return to IDLE)   │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Modal States
+
+| State  | CSS Class       | Description                          |
+|--------|-----------------|--------------------------------------|
+| CLOSED | (no class)      | Modal hidden, `display: none`        |
+| OPEN   | `.active`       | Modal visible, `display: flex`       |
+
+### Chat States
+
+| State   | UI Indicator            | Send Button | Description                    |
+|---------|-------------------------|-------------|--------------------------------|
+| IDLE    | Input enabled           | Enabled     | Waiting for user input         |
+| LOADING | Typing indicator active | Disabled    | Waiting for AI response        |
+
+### Transitions
+
+| From    | To      | Trigger                   | Action                                    |
+|---------|---------|---------------------------|-------------------------------------------|
+| CLOSED  | OPEN    | Click "Ask AI Tutor"      | `openChat()` - add `.active` class        |
+| OPEN    | CLOSED  | Click X / overlay         | `closeChat()` - remove `.active` class    |
+| IDLE    | LOADING | User sends message        | `sendMessage()` - show typing indicator   |
+| LOADING | IDLE    | AI responds               | Display response, hide typing indicator   |
+| LOADING | IDLE    | Error occurs              | Display error message, hide indicator     |
+
+### Implementation
+
+```javascript
+// Modal control
+function openChat() {
+    document.getElementById('chatModal').classList.add('active');
+    document.getElementById('chatInput').focus();
+}
+
+function closeChat() {
+    document.getElementById('chatModal').classList.remove('active');
+}
+
+// Chat state control
+function setTyping(isTyping) {
+    document.getElementById('chatTyping').classList.toggle('active', isTyping);
+    document.getElementById('chatSend').disabled = isTyping;
+    chatState.isLoading = isTyping;
+}
+```
+
+### chatState Object
+
+```javascript
+const chatState = {
+    messages: [],      // Array of {role: 'user'|'assistant', content: string}
+    isLoading: false   // True when waiting for AI response
+};
+```
+
+### Server Communication
+
+The chat panel communicates with a Railway-hosted Express server:
+
+```
+Client                          Server
+  │                               │
+  │  POST /api/ai/chat            │
+  │  {message, history}           │
+  │──────────────────────────────▶│
+  │                               │ Groq API call
+  │                               │ (llama-3.3-70b)
+  │  {response, _provider}        │
+  │◀──────────────────────────────│
+  │                               │
+```
+
+### Error States
+
+| Error                | Display                              | Recovery           |
+|----------------------|--------------------------------------|--------------------|
+| Network failure      | Error message in chat                | User can retry     |
+| Server unavailable   | "Couldn't connect to AI tutor"       | User can retry     |
+| Rate limited (429)   | "Too many requests, please wait"     | Auto-recovers      |
+
 ## External Links
 
 All external links (YouTube videos, references, PDFs) use standard `target="_blank"` behavior:
@@ -117,10 +225,11 @@ All external links (YouTube videos, references, PDFs) use standard `target="_bla
 
 ## Summary
 
-The application has minimal interactive state:
+The application has three interactive state machines:
 
 1. **QR Modal**: Binary open/closed state controlled by CSS class
-2. **Section animations**: One-time CSS animations on page load
-3. **External navigation**: Standard browser behavior (no internal state)
+2. **AI Chat Panel**: Modal state + chat state (idle/loading) with server communication
+3. **Section animations**: One-time CSS animations on page load
+4. **External navigation**: Standard browser behavior (no internal state)
 
-This simplicity is intentional—the focus is on content presentation, not complex interactivity.
+The chat panel adds conversational AI capability while maintaining the focus on educational content presentation.

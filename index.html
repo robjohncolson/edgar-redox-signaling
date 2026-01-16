@@ -661,6 +661,243 @@
         .qr-item a:hover {
             text-decoration: underline;
         }
+
+        /* AI Chat Panel */
+        .chat-btn {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-green) 100%);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            padding: 0.5rem 0.9rem;
+            border-radius: 999px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .chat-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.3);
+        }
+
+        .chat-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 14, 20, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-modal-overlay.active {
+            display: flex;
+        }
+
+        .chat-modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 700px;
+            height: 80vh;
+            max-height: 600px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .chat-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--accent-cyan);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chat-header h3::before {
+            content: '🧬';
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .chat-close:hover {
+            color: var(--text-primary);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chat-message {
+            max-width: 85%;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .chat-message.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message.assistant {
+            align-self: flex-start;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-message.assistant .chem {
+            color: var(--accent-orange);
+        }
+
+        .chat-message.system {
+            align-self: center;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-style: italic;
+            padding: 0.5rem;
+        }
+
+        .chat-message.error {
+            align-self: center;
+            background: rgba(248, 81, 73, 0.1);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+            font-size: 0.85rem;
+        }
+
+        .chat-typing {
+            align-self: flex-start;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            padding: 0.5rem;
+            display: none;
+        }
+
+        .chat-typing.active {
+            display: block;
+        }
+
+        .chat-typing::after {
+            content: '...';
+            animation: typing 1s infinite;
+        }
+
+        @keyframes typing {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .chat-input-area {
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.95rem;
+            resize: none;
+            min-height: 44px;
+            max-height: 120px;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+        }
+
+        .chat-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .chat-send {
+            background: var(--accent-cyan);
+            border: none;
+            border-radius: 8px;
+            padding: 0 1.25rem;
+            color: var(--bg-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .chat-send:hover {
+            background: #00e6b8;
+        }
+
+        .chat-send:active {
+            transform: scale(0.95);
+        }
+
+        .chat-send:disabled {
+            background: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        .chat-suggestions {
+            padding: 0 1rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .chat-suggestion {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chat-suggestion:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
     </style>
 </head>
 <body>
@@ -679,6 +916,7 @@
             <a href="./redox_signaling_revised.tex" download>LaTeX source (.tex)</a>
             <a href="./edgar_bio_apper.pdf" target="_blank" rel="noopener">Edgar's original PDF</a>
             <button class="qr-btn" onclick="document.getElementById('qrModal').classList.add('active')">QR Codes</button>
+            <button class="chat-btn" onclick="openChat()">Ask AI Tutor</button>
         </div>
     </header>
 
@@ -1256,5 +1494,161 @@
             </div>
         </div>
     </div>
+
+    <!-- AI Chat Modal -->
+    <div id="chatModal" class="chat-modal-overlay" onclick="if(event.target === this) closeChat()">
+        <div class="chat-modal">
+            <div class="chat-header">
+                <h3>Redox Signaling Tutor</h3>
+                <button class="chat-close" onclick="closeChat()">&times;</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message system">
+                    Ask me anything about redox signaling, ROS, the electron transport chain, or cell fate regulation!
+                </div>
+            </div>
+            <div class="chat-suggestions" id="chatSuggestions">
+                <button class="chat-suggestion" onclick="askSuggestion(this)">What is ROS?</button>
+                <button class="chat-suggestion" onclick="askSuggestion(this)">How does PTEN work?</button>
+                <button class="chat-suggestion" onclick="askSuggestion(this)">Explain the Fenton reaction</button>
+                <button class="chat-suggestion" onclick="askSuggestion(this)">Why do cancer cells have low ROS?</button>
+            </div>
+            <div class="chat-typing" id="chatTyping">AI is thinking</div>
+            <div class="chat-input-area">
+                <textarea class="chat-input" id="chatInput" placeholder="Ask about redox signaling..." rows="1" onkeydown="handleChatKeydown(event)"></textarea>
+                <button class="chat-send" id="chatSend" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Configuration and Logic -->
+    <script>
+        // Configuration - set your Railway server URL here
+        const CHAT_CONFIG = {
+            serverUrl: 'https://edgar-redox-chat.up.railway.app', // Update this after deployment
+            enabled: true
+        };
+
+        // Chat state
+        const chatState = {
+            messages: [],
+            isLoading: false
+        };
+
+        // Open chat modal
+        function openChat() {
+            document.getElementById('chatModal').classList.add('active');
+            document.getElementById('chatInput').focus();
+        }
+
+        // Close chat modal
+        function closeChat() {
+            document.getElementById('chatModal').classList.remove('active');
+        }
+
+        // Handle suggestion click
+        function askSuggestion(btn) {
+            document.getElementById('chatInput').value = btn.textContent;
+            sendMessage();
+        }
+
+        // Handle Enter key
+        function handleChatKeydown(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
+
+        // Add message to chat
+        function addMessage(content, role) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${role}`;
+
+            // Simple formatting for chemical formulas
+            const formatted = content
+                .replace(/H2O2/g, '<span class="chem">H₂O₂</span>')
+                .replace(/O2/g, '<span class="chem">O₂</span>')
+                .replace(/Fe2\+/g, '<span class="chem">Fe²⁺</span>')
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+            messageDiv.innerHTML = formatted;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            // Hide suggestions after first message
+            if (role === 'user') {
+                document.getElementById('chatSuggestions').style.display = 'none';
+            }
+        }
+
+        // Show/hide typing indicator
+        function setTyping(isTyping) {
+            const typing = document.getElementById('chatTyping');
+            const sendBtn = document.getElementById('chatSend');
+            if (isTyping) {
+                typing.classList.add('active');
+                sendBtn.disabled = true;
+            } else {
+                typing.classList.remove('active');
+                sendBtn.disabled = false;
+            }
+            chatState.isLoading = isTyping;
+        }
+
+        // Send message to AI
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+
+            if (!message || chatState.isLoading) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            chatState.messages.push({ role: 'user', content: message });
+            input.value = '';
+
+            // Show typing indicator
+            setTyping(true);
+
+            try {
+                const response = await fetch(`${CHAT_CONFIG.serverUrl}/api/ai/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: message,
+                        history: chatState.messages.slice(-10) // Last 10 messages for context
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Add assistant response
+                addMessage(data.response, 'assistant');
+                chatState.messages.push({ role: 'assistant', content: data.response });
+
+            } catch (error) {
+                console.error('Chat error:', error);
+                addMessage(`Sorry, I couldn't connect to the AI tutor. ${error.message}`, 'error');
+            } finally {
+                setTyping(false);
+            }
+        }
+
+        // Auto-resize textarea
+        document.getElementById('chatInput')?.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+    </script>
 </body>
 </html>
